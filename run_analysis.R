@@ -102,9 +102,14 @@ write.csv(tidydata, file = "tidydata.csv",row.names = FALSE)
 ##tidy data set with the average of each variable for each 
 ##activity and each subject.
 
-meandata <- ddply(melt(tidydata, id.vars=c("subject", "activity")), .(subject, activity), summarise, MeanSamples=mean(value)) 
+##meandata <- ddply(melt(tidydata, id.vars=c("subject", "activity")), .(subject, activity), summarise, MeanSamples=mean(value)) 
+
+
+meandata <- ddply(tidydata, c("subject","activity"), numcolwise(mean))
+
 
 write.csv(meandata, file = "meandata.csv",row.names = FALSE) 
+write.table(meandata, file = "meandata.txt",row.names = FALSE) 
 
 View(tidydata)
 View(meandata)
