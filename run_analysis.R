@@ -8,9 +8,11 @@ setwd(directory)
 ##does the following.
 
 ##Load libraries for analysis
+
+library(plyr)
 library(dplyr)
 library(reshape2)
-library(plyr)
+
 
 ## Obtain Data
 
@@ -77,12 +79,14 @@ tidydata <- select(alldata,
 
 ##Use descriptive activity names to name the activities in the data set
 
-tidydata$activity <- gsub("1", "walking", tidydata$activity, perl=TRUE)
-tidydata$activity <- gsub("2", "walking_upstairs", tidydata$activity, perl=TRUE)
-tidydata$activity <- gsub("3", "walking_downstairs", tidydata$activity, perl=TRUE)
-tidydata$activity <- gsub("4", "sitting", tidydata$activity, perl=TRUE)
-tidydata$activity <- gsub("5", "standing", tidydata$activity, perl=TRUE)
-tidydata$activity <- gsub("6", "laying", tidydata$activity, perl=TRUE)
+
+tidydata$activity <- gsub("1", "walk", tidydata$activity, perl=TRUE)
+tidydata$activity <- gsub("2", "walkup", tidydata$activity, perl=TRUE)
+tidydata$activity <- gsub("3", "walkdown", tidydata$activity, perl=TRUE)
+tidydata$activity <- gsub("4", "sit", tidydata$activity, perl=TRUE)
+tidydata$activity <- gsub("5", "stand", tidydata$activity, perl=TRUE)
+tidydata$activity <- gsub("6", "lay", tidydata$activity, perl=TRUE)
+
 
 ##Appropriately labels the data set with descriptive variable names.
 
@@ -101,6 +105,7 @@ write.csv(tidydata, file = "tidydata.csv",row.names = FALSE)
 meandata <- ddply(melt(tidydata, id.vars=c("subject", "activity")), .(subject, activity), summarise, MeanSamples=mean(value)) 
 
 write.csv(meandata, file = "meandata.csv",row.names = FALSE) 
+
 View(tidydata)
 View(meandata)
 
